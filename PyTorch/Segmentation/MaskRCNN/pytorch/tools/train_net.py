@@ -34,7 +34,7 @@ from maskrcnn_benchmark.utils.logger import format_step
 #import dllogger as DLLogger
 import dllogger
 from maskrcnn_benchmark.utils.logger import format_step
-import smdistributed.dataparallel.torch.torch_smddp
+# import smdistributed.dataparallel.torch.torch_smddp
 
 # DDP
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -249,11 +249,11 @@ def main():
     if args.distributed:
         torch.cuda.set_device(args.local_rank)
         torch.distributed.init_process_group(
-            backend="smddp", init_method="env://"
+            backend="nccl", init_method="env://"
         )
         synchronize()
 
-    cfg.merge_from_file(args.config_file)
+    cfg.merge_from_file("/fsx/config")
     cfg.merge_from_list(args.opts)
 
     # Redundant option - Override config parameter with command line input

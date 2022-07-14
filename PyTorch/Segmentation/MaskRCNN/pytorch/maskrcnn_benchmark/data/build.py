@@ -6,7 +6,7 @@ import logging
 import torch.utils.data
 #from maskrcnn_benchmark.utils.comm import get_world_size
 from maskrcnn_benchmark.utils.imports import import_file
-from smdistributed.dataparallel.torch.distributed import get_world_size
+#from smdistributed.dataparallel.torch.distributed import get_world_size
 
 from . import datasets as D
 from . import samplers
@@ -14,6 +14,9 @@ from . import samplers
 from .collate_batch import BatchCollator
 from .transforms import build_transforms
 
+
+def get_world_size():
+    return 1
 
 def build_dataset(dataset_list, transforms, dataset_catalog, data_dir, is_train=True):
     """

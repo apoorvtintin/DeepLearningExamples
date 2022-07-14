@@ -53,7 +53,7 @@ from apex.amp import _amp_state
 
 import dllogger
 from concurrent.futures import ProcessPoolExecutor
-import smdistributed.dataparallel.torch.torch_smddp
+#import smdistributed.dataparallel.torch.torch_smddp
 
 torch._C._jit_set_profiling_mode(False)
 torch._C._jit_set_profiling_executor(False)
@@ -308,7 +308,8 @@ def setup_training(args):
         torch.cuda.set_device(args.local_rank)
         device = torch.device("cuda", args.local_rank)
         # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
-        torch.distributed.init_process_group(backend='smddp', init_method='env://')
+        # torch.distributed.init_process_group(backend='smddp', init_method='env://')
+        torch.distributed.init_process_group(backend='nccl', init_method='env://')
         args.n_gpu = 1
 
     if args.gradient_accumulation_steps == 1:

@@ -12,21 +12,24 @@
 # limitations under the License.
 
 import torch
-import smdistributed.dataparallel.torch.distributed as herring
+import os
+# import smdistributed.dataparallel.torch.distributed as herring
 
 def get_rank():
     # if not dist.is_available():
     #     return 0
     # if not dist.is_initialized():
     #     return 0
-    return herring.get_rank()
+    return os.environ["OMPI_COMM_WORLD_LOCAL_RANK"]
+    # return herring.get_rank()
 
 def get_world_size():
     # if not dist.is_available():
     #     return 1
     # if not dist.is_initialized():
     #     return 1
-    return herring.get_world_size()
+    # return herring.get_world_size()
+    return os.environ["OMPI_COMM_WORLD_SIZE"]
 
 def is_main_process():
     return get_rank() == 0
