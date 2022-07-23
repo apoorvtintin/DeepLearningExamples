@@ -221,7 +221,7 @@ std::vector<at::Tensor> GeneratePreNMSUprightBoxes(
           pre_nms_nboxes,
           sorted_scores.data_ptr<float>(),
           boxes_keep_flags.data_ptr<uint8_t>());
-  THCudaCheck(cudaGetLastError());
+  C10_CUDA_CHECK(cudaGetLastError());
 
   return std::vector<at::Tensor>{boxes, sorted_scores, boxes_keep_flags};
 }
